@@ -5,25 +5,35 @@ import json
 from types import SimpleNamespace
 import math
 
-client = "🙎🏼‍♂️ Khách hàng"
-merchant = "👨🏻‍💼 Merchant"
-kyc = "👨‍💻 KYC"
+kyc = "👨‍💻 Xác minh KYC"
+uytin = "💎 DS Uy tín"
 
 domain = "https://chootc.com"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    buttons = [[KeyboardButton(client), KeyboardButton(merchant)], [
-        KeyboardButton(kyc)]]
+    buttons = [[KeyboardButton(kyc), KeyboardButton(uytin)]]
 
     reply_markup = ReplyKeyboardMarkup(buttons, resize_keyboard=True)
 
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Chọn phương án bên dưới. Bạn là?", reply_markup=reply_markup)
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Chào mừng bạn đến với <b>Chợ OTC VN</b>. Hãy chọn phương án bên dưới:", reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
 
 async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     username = update.effective_user.username
     chat_id = update.effective_chat.id
+
+    if "/post" in update.message.text:
+        if update.message.chat.id == 5333185120:
+
+            text = update.message.text.split("|")
+
+            reply_markup = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(
+                    text=text[2], url="https://t.me/OTCMarket_bot")]],
+            )
+
+            await context.bot.send_message(chat_id="-1001608586636", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
     if update.message.chat.type != "private":
         return
@@ -32,29 +42,18 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await context.bot.send_message(chat_id, text="Vui lòng cập nhật Username của bạn!")
         return
 
-    if client in update.message.text:
-        link = f"{domain}/captcha/{username}-{chat_id}"
-
-        reply_markup = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text='Xác minh', url=link)]],
-        )
-
-        text = f"<b>🔥 Xác minh bạn không phải Robot!</b> \n\n<i>Nhấn vào nút bên dưới để xác minh</>"
-
-        await context.bot.send_message(chat_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
-
-    if merchant in update.message.text or kyc in update.message.text:
+    if kyc in update.message.text:
         link = f"{domain}/kyc/{username}-{chat_id}"
 
         reply_markup = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text='Tiến hành KYC', url=link)]],
         )
 
-        text = "<b>🔥 Xác minh danh tính của bạn!</b> \n \n<i>Hãy thực hiện theo các bước dưới đây</i> \n1. Chuẩn bị thiết bị của bạn: cho phép trình duyệt truy cập định vị, camera và micro. \n2. Nhấn vào nút <b>Tiến hành KYC</b>. \n3. Làm theo hướng dẫn trên trình duyệt."
+        text = "<b>🔥 Xác minh danh tính của bạn!</b> \n \n<i>Hãy thực hiện theo các bước dưới đây</i> \n1. Chuẩn bị thiết bị của bạn: cho phép trình duyệt truy cập định vị và camera. \n2. Nhấn vào nút <b>Tiến hành KYC</b>. \n3. Làm theo hướng dẫn trên trình duyệt."
 
         await context.bot.send_message(chat_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
-    if "/uytin" in update.message.text:
+    if "/uytin" in update.message.text or uytin in update.message.text:
 
         if "@" in update.message.text:
 
@@ -64,6 +63,11 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
             if res.text == "":
                 text = f"@{username} không tồn tại trong hệ thống!"
+                await context.bot.send_message(chat_id, text=text)
+                return
+
+            if res.json()['transaction'] is None:
+                text = f"@{username} chưa có giao dịch nào thành công"
             else:
                 text = f"@{username} đã giao dịch thành công {res.json()['transaction']} lần"
             await context.bot.send_message(chat_id, text=text)
@@ -79,6 +83,11 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
     if "/kyc" in update.message.text:
+
+        if "@" not in update.message.text:
+            await context.bot.send_message(chat_id, text="Sai cú pháp, phải có @ trước Username!")
+            return
+
         username = update.message.text[6:]
         res = requests.get(
             f"{domain}/api/check-user/{username}")

@@ -23,7 +23,7 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     username = update.effective_user.username
     chat_id = update.effective_chat.id
 
-    if update.message.chat.username in ["minatabar", "stormmr"]:
+    if update.message.chat.username in ["minatabar", "quocusdt"]:
 
         if "/postwithbutton" in update.message.text:
             text = update.message.text.split("|")
@@ -33,12 +33,12 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     text=text[2], url="https://t.me/OTCMarket_bot")]],
             )
 
-            await context.bot.send_message(chat_id="-1001608586636", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
+            await context.bot.send_message(chat_id="-1001871429218", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
         if "/postnormal" in update.message.text:
             text = "<b>Thành viên uy tín là ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Không ít hơn 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Không ít hơn 30 lần giao dịch thành công.\n- Và ít nhất 3 admin cho bạn uy tín.\n\n<i>Hãy chat ngay với bot để kiểm tra danh sách uy tín</i>"
 
-            await context.bot.send_message(chat_id="-1001608586636", text=text, parse_mode=constants.ParseMode.HTML)
+            await context.bot.send_message(chat_id="-1001871429218", text=text, parse_mode=constants.ParseMode.HTML)
         
 
     if update.message.chat.type != "private":

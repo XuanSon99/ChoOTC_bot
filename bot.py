@@ -23,9 +23,9 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     username = update.effective_user.username
     chat_id = update.effective_chat.id
 
-    if "/post" in update.message.text:
-        if update.message.chat.id == 5333185120:
+    if update.message.chat.username in ["minatabar", "stormmr"]:
 
+        if "/postwithbutton" in update.message.text:
             text = update.message.text.split("|")
 
             reply_markup = InlineKeyboardMarkup(
@@ -34,6 +34,12 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             )
 
             await context.bot.send_message(chat_id="-1001608586636", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
+
+        if "/postnormal" in update.message.text:
+            text = "<b>Thành viên uy tín là ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Không ít hơn 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Không ít hơn 30 lần giao dịch thành công.\n- Và ít nhất 3 admin cho bạn uy tín.\n\n<i>Hãy chat ngay với bot để kiểm tra danh sách uy tín</i>"
+
+            await context.bot.send_message(chat_id="-1001608586636", text=text, parse_mode=constants.ParseMode.HTML)
+        
 
     if update.message.chat.type != "private":
         return
@@ -70,6 +76,10 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 text = f"@{username} chưa có giao dịch nào thành công"
             else:
                 text = f"@{username} đã giao dịch thành công {res.json()['transaction']} lần"
+
+                if res.json()['reputation'] == 'yes':
+                    text +=" - Uy tín 💎"
+
             await context.bot.send_message(chat_id, text=text)
             return
 
@@ -113,7 +123,11 @@ def content(page):
     text = "<b>🔥 Xếp hạng uy tín 🔥</b>\n\n<i>Xếp hạng dựa theo số lần giao dịch thành công</i>\n"
 
     for index, item in enumerate(res.json()['data']):
-        text += f"{index-1+res.json()['current_page']*res.json()['per_page']}: @{item['username']} ({item['transaction']} lần)\n"
+        text += f"{index-1+res.json()['current_page']*res.json()['per_page']}: @{item['username']} ({item['transaction']} lần)"
+        if item['reputation'] == 'yes':
+            text +=" - Uy tín 💎\n"
+        else:
+            text +="\n"
 
     text += f"\nTrang: {page}/{math.ceil(res.json()['total']/res.json()['per_page'])}"
     return text
@@ -159,7 +173,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 app = ApplicationBuilder().token(
-    "5839467716:AAFZLmO_BB9XTuws32wvj72q299PhEsXJLQ").build()
+    "5960653063:AAHyOV3a4nndUwSyXc0Vkrh8Dq87LZ3dh00").build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CallbackQueryHandler(button))

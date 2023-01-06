@@ -30,7 +30,7 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
             reply_markup = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(
-                    text=text[2], url="https://t.me/OTCMarket_bot")]],
+                    text=text[2], url="https://t.me/ChoOTCVN_bot")]],
             )
 
             await context.bot.send_message(chat_id="-1001871429218", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)

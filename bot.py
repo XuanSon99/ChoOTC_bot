@@ -132,7 +132,7 @@ def content(page):
     text = "<b>🔥 Xếp hạng uy tín 🔥</b>\n\n<i>Xếp hạng dựa theo số lần giao dịch thành công</i>\n"
 
     for index, item in enumerate(res.json()['data']):
-        text += f"{index-1+res.json()['current_page']*res.json()['per_page']}: @{item['username']} ({item['transaction']} lần)"
+        text += f"- @{item['username']} ({item['transaction']} lần)"
         if item['reputation'] == 'yes':
             text += " - Uy tín 💎\n"
         else:

@@ -39,9 +39,18 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             text = "<b>Thành viên uy tín là ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Không ít hơn 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Không ít hơn 30 lần giao dịch thành công.\n- Và ít nhất 3 admin cho bạn uy tín.\n\n<i>Hãy chat ngay với bot để kiểm tra danh sách uy tín</i>"
 
             await context.bot.send_message(chat_id="-1001871429218", text=text, parse_mode=constants.ParseMode.HTML)
-        
 
     if update.message.chat.type != "private":
+
+        if "/uytin" in update.message.text:
+            reply_markup = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text='|<', callback_data='first'),
+                  InlineKeyboardButton(text='<', callback_data='prev'),
+                  InlineKeyboardButton(text='>', callback_data='next'),
+                  InlineKeyboardButton(text='>|', callback_data='last')]],
+            )
+
+            await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
         return
 
     if username is None:
@@ -78,7 +87,7 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 text = f"@{username} đã giao dịch thành công {res.json()['transaction']} lần"
 
                 if res.json()['reputation'] == 'yes':
-                    text +=" - Uy tín 💎"
+                    text += " - Uy tín 💎"
 
             await context.bot.send_message(chat_id, text=text)
             return
@@ -125,9 +134,9 @@ def content(page):
     for index, item in enumerate(res.json()['data']):
         text += f"{index-1+res.json()['current_page']*res.json()['per_page']}: @{item['username']} ({item['transaction']} lần)"
         if item['reputation'] == 'yes':
-            text +=" - Uy tín 💎\n"
+            text += " - Uy tín 💎\n"
         else:
-            text +="\n"
+            text += "\n"
 
     text += f"\nTrang: {page}/{math.ceil(res.json()['total']/res.json()['per_page'])}"
     return text

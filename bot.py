@@ -34,7 +34,6 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     #     )
 
     #     await context.bot.send_message(chat_id="-1001871429218", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
-
     if update.message.chat.type != "private":
 
         if "/uytin" in update.message.text:
@@ -187,7 +186,7 @@ app = ApplicationBuilder().token(
 # app = ApplicationBuilder().token(
 #     "6217705988:AAEOYp5g31rkl-iWrXAGE_mo7t0f0Oz3qIo").build()
 
-app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("start", start)) 
 app.add_handler(CallbackQueryHandler(button))
 app.add_handler(MessageHandler(filters.ALL, messageHandler))
 
@@ -202,13 +201,16 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
         "<b>Cảnh Báo Lừa Đảo (Scam Warning)</b>\nCó nhiều đối tượng sử dụng tài khoản Telegram với Bio + Username tương tự đội ngũ Admin và Merchant trong chợ nhắn tin cho người dùng để thực hiện hành vi lừa đảo.\n<b>Lưu ý:</b>\n- Đội ngũ Merchant Uy Tín sẽ không chủ động nhắn tin cho các bạn để yêu cầu giao dịch\n- Số tài khoản - địa chỉ ví của Merchant được Admin chợ quản lý nghiêm ngặt, tuyệt đối không giao dịch thông qua các số tài khoản - địa chỉ ví lạ\n- Các kiểu tin nhắn như “chuyển gấp; ứng trước; chuyển qua cho bạn;....” đều là hình thức Scam trá hình\n\n<i>Liên hệ @ChoOTCVN_support để được giải đáp các thắc mắc trên chợ</i>",
 
-        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n- Chúng tôi sẽ không chịu trách nhiệm cho bất kỳ giao dịch ngoài luồng nào được thực hiện không thông qua Admin chợ!\n- Merchant của chợ sẽ không bao giờ chủ động nhắn tin để yêu cầu giao dịch!\n\n<i>Liên hệ @ChoOTCVN_support để được giải đáp các thắc mắc trên chợ</i>",
+        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\nCác thành viên trong Chợ OTC Việt Nam đều có thể tự do thoả thuận và giao dịch với nhau mà không cần thông qua BQL chợ. Tuy nhiên:\n- Chúng tôi sẽ không chịu trách nhiệm cho bất kỳ giao dịch ngoài luồng nào được thực hiện không thông qua Admin chợ!\n- Thương Nhân của chợ sẽ không bao giờ chủ động nhắn tin để yêu cầu giao dịch!\n- Để đảm bảo giao dịch an toàn chúng tôi đưa ra lời khuyên nên liên hệ trực tiếp các Admin hoặc những thành viên được cấp huy hiệu “Uy Tín” trên chợ.\n\n<i>Liên hệ @ChoOTCVN_support để được giải đáp các thắc mắc trên chợ</i>",
 
-        "<b>Giới thiệu Chợ OTC Việt Nam</b>\nChợ OTC Việt Nam là cộng đồng giao lưu, trao đổi USDT,BTC, ETH,... các mặt hàng trực tiếp giữa tất cả <b>Khách Hàng</b> và các <b>Thương Nhân</b>, không thông qua bất cứ đơn vị tổ chức nào, không thu bất cứ khoản phí nào. Tất cả các phát sinh giao dịch đều là thỏa thuận giữa người mua và người bán.\n(Lưu ý: Chỉ các <b>Thương Nhân</b> mới được phép đăng quảng cáo trên chợ sau khi đăng ký trở thành <b>Thương Nhân</b> với BQL chợ.)\n\n<i>Liên hệ với @ChoOTCVN_support để nhận thông tin hỗ trợ</i>"]
+        "<b>Giới thiệu Chợ OTC Việt Nam</b>\nChợ OTC Việt Nam là cộng đồng giao lưu, trao đổi USDT,BTC, ETH,... các mặt hàng trực tiếp giữa tất cả <b>Khách Hàng</b> và các <b>Thương Nhân</b>, không thông qua bất cứ đơn vị tổ chức nào, không thu bất cứ khoản phí nào. Tất cả các phát sinh giao dịch đều là thỏa thuận giữa người mua và người bán.\n(Lưu ý: Chỉ các <b>Thương Nhân</b> mới được phép đăng quảng cáo trên chợ sau khi đăng ký trở thành <b>Thương Nhân</b> với BQL chợ.)\n\n<i>Liên hệ với @ChoOTCVN_support để nhận thông tin hỗ trợ</i>"
+        ]
 
     res = requests.get(
         f"{domain}/api/setup")
     last_msg_id = res.json()[0]["value"]
+
+    #  await context.bot.delete_message(message_id=last_msg_id, chat_id='5333185120')
 
     await context.bot.delete_message(message_id=last_msg_id, chat_id='-1001871429218')
 

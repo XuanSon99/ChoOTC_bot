@@ -180,11 +180,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
 
 
-app = ApplicationBuilder().token(
-    "5960653063:AAHyOV3a4nndUwSyXc0Vkrh8Dq87LZ3dh00").build()
-
 # app = ApplicationBuilder().token(
-#     "6217705988:AAEOYp5g31rkl-iWrXAGE_mo7t0f0Oz3qIo").build()
+#     "5960653063:AAHyOV3a4nndUwSyXc0Vkrh8Dq87LZ3dh00").build()
+
+app = ApplicationBuilder().token(
+    "6217705988:AAEOYp5g31rkl-iWrXAGE_mo7t0f0Oz3qIo").build()
 
 app.add_handler(CommandHandler("start", start)) 
 app.add_handler(CallbackQueryHandler(button))
@@ -220,8 +220,8 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
         f"{domain}/api/setup/1", {'value': msg.message_id})
 
 
-job_queue = app.job_queue
+# job_queue = app.job_queue
 
-job_minute = job_queue.run_repeating(callback_minute, interval=600, first=10)
+# job_minute = job_queue.run_repeating(callback_minute, interval=600, first=10)
 
 app.run_polling()

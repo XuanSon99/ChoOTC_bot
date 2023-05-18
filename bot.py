@@ -9,7 +9,7 @@ import random
 kyc = "👨‍💻 Xác minh KYC"
 uytin = "💎 DS Uy tín"
 
-domain = "https://chootc.com"
+domain = "https://api.chootc.com"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -52,7 +52,7 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         return
 
     if kyc in update.message.text:
-        link = f"{domain}/kyc/{username}-{chat_id}"
+        link = f"https://kyc.chootc.com/#/{username}-{chat_id}"
 
         reply_markup = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text='Tiến hành KYC', url=link)]],

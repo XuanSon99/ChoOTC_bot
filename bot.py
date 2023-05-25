@@ -49,7 +49,7 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if "uy tín" in update.message.text:
 
             reply_markup = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text='Vote uy tín', callback_data='vote')]],
+                [[InlineKeyboardButton(text='VOTE UY TÍN', callback_data='vote')]],
             )
 
             start_time = time.time()
@@ -212,7 +212,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             return
         
         reply_markup = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text='Vote uy tín', callback_data='vote')]],
+            [[InlineKeyboardButton(text='VOTE UY TÍN', callback_data='vote')]],
         )
 
         res = requests.get(f"{domain}/api/votings/{voting_user}")

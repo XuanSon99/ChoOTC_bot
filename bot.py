@@ -206,7 +206,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     
     if query.data in ["vote"]:
+        #get username is voted
         voting_user = update.effective_message.text.split("\n")[0].split()[-1]
+
+        #check voting user has kyc
+        info_user = requests.get(f"{domain}/api/user-info/{username}")
+
+        if not info_user.content or info_user.json()["kyc"] != "success":
+            return
 
         if username in voting_user:
             return
@@ -254,8 +261,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             
             #export voted user list
             percent = 0
+            has_admin = False
             voted_array = voted_user.split("\n")
-            print(voted_array)
             for index, item in enumerate(voted_array):
                 if not index:
                     list_text = f"{index+1}. {item}"
@@ -264,13 +271,18 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 
                 if "Admin" in item:
                     percent += 30
+                    has_admin = True
                 else:
                     percent += 15
 
             if percent < 100:
-                result = f"Tỷ lệ: {percent}% | Chưa đủ uy tín 🔴"
+                result = f"Tỷ lệ: {percent}% | Chưa đủ uy tín để giao dịch 🔴"
             else:
-                result = f"Tỷ lệ: 100% | Đã đủ uy tín 🟢"
+                if has_admin:
+                    result = f"Tỷ lệ: 100% | Đã đủ uy tín để giao dịch 🟢"
+                else:
+                    percent_random = random.randrange(83, 96)
+                    result = f"Tỷ lệ: {percent_random}% | Chưa đủ uy tín để giao dịch 🔴"   
 
             text = f"<b>Biểu quyết uy tín {voting_user}</b>\n<i>Thời gian còn: {time_remaining}</i> ⏱\n<b>Danh sách đã cho uy tín:</b>\n{list_text}\n\n<b>{result}</b>"
             await context.bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)

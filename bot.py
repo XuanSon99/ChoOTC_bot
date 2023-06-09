@@ -6,6 +6,8 @@ from types import SimpleNamespace
 import math
 import random
 import time
+from datetime import datetime
+import pytz
 
 kyc = "👨‍💻 Xác minh KYC"
 uytin = "💎 DS Uy tín"
@@ -238,7 +240,9 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             # get current time
             seconds = abs(time.time() - float(start_time) - 300)
             time_remaining = time.strftime("%M:%S", time.gmtime(seconds))
-            current_time = time.strftime("%H:%M", time.localtime())
+            # current_time = time.strftime("%H:%M", time.localtime())
+            current_time = datetime.now(tz=pytz.timezone('Asia/Ho_Chi_Minh'))
+            current_hour = str(current_time)[11:16]
 
             #check user is admin
             response = requests.get(f"{domain}/api/isadmin/@{username}")
@@ -251,10 +255,10 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             global voted_user
 
             if not voted_list:
-                voted_user = f'@{username} {current_time} {is_admin}'
+                voted_user = f'@{username} {current_hour} {is_admin}'
                 requests.put(f"{domain}/api/voting/{voting_user}",{'voted_user': voted_user})
             if voted_list and username not in voted_list:
-                voted_user = f'{voted_list}\n@{username} {current_time} {is_admin}'
+                voted_user = f'{voted_list}\n@{username} {current_hour} {is_admin}'
                 requests.put(f"{domain}/api/voting/{voting_user}",{'voted_user': voted_user})
             if voted_list and username in voted_list:
                 return
@@ -288,11 +292,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await context.bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
 
-app = ApplicationBuilder().token(
-    "5960653063:AAHyOV3a4nndUwSyXc0Vkrh8Dq87LZ3dh00").build()
-
 # app = ApplicationBuilder().token(
-#     "6217705988:AAEOYp5g31rkl-iWrXAGE_mo7t0f0Oz3qIo").build()
+#     "5960653063:AAHyOV3a4nndUwSyXc0Vkrh8Dq87LZ3dh00").build()
+
+app = ApplicationBuilder().token(
+    "6217705988:AAEOYp5g31rkl-iWrXAGE_mo7t0f0Oz3qIo").build()
 
 app.add_handler(CommandHandler("start", start)) 
 app.add_handler(CallbackQueryHandler(button))

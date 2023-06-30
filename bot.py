@@ -255,10 +255,10 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             global voted_user
 
             if not voted_list:
-                voted_user = f'@{username} {current_hour} {is_admin}'
+                voted_user = f'@{username} {is_admin}'
                 requests.put(f"{domain}/api/voting/{voting_user}",{'voted_user': voted_user})
             if voted_list and username not in voted_list:
-                voted_user = f'{voted_list}\n@{username} {current_hour} {is_admin}'
+                voted_user = f'{voted_list}\n@{username} {is_admin}'
                 requests.put(f"{domain}/api/voting/{voting_user}",{'voted_user': voted_user})
             if voted_list and username in voted_list:
                 return
@@ -317,23 +317,20 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
         "<b>Giới thiệu Chợ OTC Việt Nam</b>\nChợ OTC Việt Nam là cộng đồng giao lưu, trao đổi USDT,BTC, ETH,... các mặt hàng trực tiếp giữa tất cả <b>Khách Hàng</b> và các <b>Thương Nhân</b>, không thông qua bất cứ đơn vị tổ chức nào, không thu bất cứ khoản phí nào. Tất cả các phát sinh giao dịch đều là thỏa thuận giữa người mua và người bán.\n(Lưu ý: Chỉ các <b>Thương Nhân</b> mới được phép đăng quảng cáo trên chợ sau khi đăng ký trở thành <b>Thương Nhân</b> với BQL chợ.)\n\n<i>Liên hệ với @ChoOTCVN_support để nhận thông tin hỗ trợ</i>"
         ]
-
-    res = requests.get(
-        f"{domain}/api/setup")
-    last_msg_id = res.json()[0]["value"]
-
-    #  await context.bot.delete_message(message_id=last_msg_id, chat_id='5333185120')
-
-    await context.bot.delete_message(message_id=last_msg_id, chat_id='-1001871429218')
-
-    msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
     
-    requests.put(
-        f"{domain}/api/setup/1", {'value': msg.message_id})
+    try:
+        res = requests.get(f"{domain}/api/setup")
+        last_msg_id = res.json()[0]["value"]
+        await context.bot.delete_message(message_id=last_msg_id, chat_id='-1001871429218')
+        msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
+        requests.put(f"{domain}/api/setup/1", {'value': msg.message_id})
+    except:
+        msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
+        requests.put(f"{domain}/api/setup/1", {'value': msg.message_id})
 
 
-# job_queue = app.job_queue
+job_queue = app.job_queue
 
-# job_minute = job_queue.run_repeating(callback_minute, interval=600, first=10)
+job_minute = job_queue.run_repeating(callback_minute, interval=1800, first=10)
 
 app.run_polling()

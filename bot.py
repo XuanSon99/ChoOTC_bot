@@ -334,8 +334,8 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
         requests.put(f"{domain}/api/setup/4", {'value': msg.message_id})
 
 
-job_queue = app.job_queue
+# job_queue = app.job_queue
 
-job_minute = job_queue.run_repeating(callback_minute, interval=7200, first=10)
+# job_minute = job_queue.run_repeating(callback_minute, interval=7200, first=10)
 
 app.run_polling()

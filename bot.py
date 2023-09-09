@@ -312,7 +312,13 @@ app.add_handler(MessageHandler(filters.ALL, messageHandler))
 async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
     list = [
-        "<b>Thành Viên Uy Tín Là Ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng. Huy hiệu uy tín phải được đội ngũ bản quản lý chợ cấp.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Có trên 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Giao dịch thành công tối thiểu 30 lần.\n- Được check thông tin cụ thể và phê duyệt từ 3 Admin.\n\n<i>Chat /uytin với bot @ChoOTCVN_bot để kiểm tra danh sách uy tín!</i>",
+        "<b>Điều Kiện Để Đăng Quảng Cáo</b>\n👉 Hãy chat ngay với @ChoOTCVN_bot để gửi yêu cầu KYC. Sau khi KYC thành công bạn sẽ được tự do đăng quảng cáo, mua bán, trao đổi với các Thương Nhân khác trong chợ.\n\nLưu ý:\n- Huy hiệu KYC là những Thương Nhân đã KYC.\n- Huy hiệu Uy tín là những Thương Nhân uy tín, buôn bán thâm niên và được ban quản lý bảo trợ.",
+
+        "<b>Quy Định Về Đăng Quảng Cáo</b>\n👉 Thương Nhân chỉ được phép đăng quảng cáo theo form: Mua/bán 100k USDT giá 24xxx. Không được phép đăng link, nếu đăng link sẽ bị ban ngay lập tức!",
+
+        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n👉 Các thành viên được phép tự do trao đổi, mua bán với nhau mà không cần thông qua Admin hay bên thứ 3.  Chợ OTC Việt Nam 🇻🇳 sẽ không chịu trách nhiệm đối với những giao dịch không có mặt của Admin hoặc không phải là thành viên uy tín được ban quản lý bảo trợ!",
+
+        # "<b>Thành Viên Uy Tín Là Ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng. Huy hiệu uy tín phải được đội ngũ bản quản lý chợ cấp.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Có trên 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Giao dịch thành công tối thiểu 30 lần.\n- Được check thông tin cụ thể và phê duyệt từ 3 Admin.\n\n<i>Chat /uytin với bot @ChoOTCVN_bot để kiểm tra danh sách uy tín!</i>",
 
         # "<b>Xác Minh Danh Tính (KYC) Để Làm Gì?</b>\nKYC là quy trình dành cho các User muốn mua bán và giao dịch thường xuyên trên chợ:\n- KYC để đẩy nhanh tiến độ giao dịch nếu bạn là khách hàng\n- KYC để xác minh uy tín nếu bạn là Merchant\n- KYC sớm để nhận những ưu đãi từ đội ngũ Admin chợ\n\n<i>Chat ngay với bot @ChoOTCVN_bot để KYC!</i>",
 
@@ -334,8 +340,8 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
         requests.put(f"{domain}/api/setup/4", {'value': msg.message_id})
 
 
-# job_queue = app.job_queue
+job_queue = app.job_queue
 
-# job_minute = job_queue.run_repeating(callback_minute, interval=7200, first=10)
+job_minute = job_queue.run_repeating(callback_minute, interval=7200, first=10)
 
 app.run_polling()

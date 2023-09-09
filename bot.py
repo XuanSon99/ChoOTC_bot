@@ -77,6 +77,11 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if username is None:
         await context.bot.send_message(chat_id, text="Vui lòng cập nhật Username của bạn!")
         return
+    
+    if "/send" in update.message.text:
+        text = "Thông báo chính thức từ <b>Ban Quản Lý Chợ OTC Việt Nam</b> 🇻🇳\n- Sau 1 thời gian dài chạy thử nghiệm, hoàn tất các quy chuẩn của chợ, chúng tôi đã quyết định sẽ chính thức mở chợ vào hôm nay 9/9/2023.\n- Các thành viên đã KYC trước đó sẽ được xét duyệt để đăng quảng cáo mua bán và không thao tác gì thêm.\n\n<i>Đây là thông báo dành cho những ai đã KYC trước đó!</i>"
+        chat_id = update.message.text[6:]
+        await context.bot.send_message(chat_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
     if kyc in update.message.text:
         link = f"https://kyc.chootc.com/#/{username}-{chat_id}"

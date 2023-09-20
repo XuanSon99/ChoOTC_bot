@@ -15,7 +15,7 @@ uytin = "💎 DS Uy tín"
 domain = "https://api.chootc.com"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    buttons = [[KeyboardButton(kyc), KeyboardButton(uytin)]]
+    buttons = [[KeyboardButton(kyc)]]
 
     reply_markup = ReplyKeyboardMarkup(buttons, resize_keyboard=True)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Chào mừng bạn đến với <b>Chợ OTC VN</b>. Hãy chọn phương án bên dưới:", reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
@@ -38,15 +38,15 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     #     await context.bot.send_message(chat_id="-1001871429218", text=text[1], reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
     if update.message.chat.type != "private":
 
-        if "/uytin" in update.message.text:
-            reply_markup = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text='|<', callback_data='first'),
-                  InlineKeyboardButton(text='<', callback_data='prev'),
-                  InlineKeyboardButton(text='>', callback_data='next'),
-                  InlineKeyboardButton(text='>|', callback_data='last')]],
-            )
+        # if "/uytin" in update.message.text:
+        #     reply_markup = InlineKeyboardMarkup(
+        #         [[InlineKeyboardButton(text='|<', callback_data='first'),
+        #           InlineKeyboardButton(text='<', callback_data='prev'),
+        #           InlineKeyboardButton(text='>', callback_data='next'),
+        #           InlineKeyboardButton(text='>|', callback_data='last')]],
+        #     )
 
-            await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
+        #     await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
         if "uy tín" in update.message.text:
 
@@ -94,38 +94,38 @@ async def messageHandler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
         await context.bot.send_message(chat_id, text=text, reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
-    if "/uytin" in update.message.text or uytin in update.message.text:
+    # if "/uytin" in update.message.text or uytin in update.message.text:
 
-        if "@" in update.message.text:
+    #     if "@" in update.message.text:
 
-            username = update.message.text[8:]
-            res = requests.get(
-                f"{domain}/api/check-user/{username}")
+    #         username = update.message.text[8:]
+    #         res = requests.get(
+    #             f"{domain}/api/check-user/{username}")
 
-            if res.text == "":
-                text = f"@{username} không tồn tại trong hệ thống!"
-                await context.bot.send_message(chat_id, text=text)
-                return
+    #         if res.text == "":
+    #             text = f"@{username} không tồn tại trong hệ thống!"
+    #             await context.bot.send_message(chat_id, text=text)
+    #             return
 
-            if res.json()['transaction'] is None:
-                text = f"@{username} chưa có giao dịch nào thành công"
-            else:
-                text = f"@{username} đã giao dịch thành công {res.json()['transaction']} lần"
+    #         if res.json()['transaction'] is None:
+    #             text = f"@{username} chưa có giao dịch nào thành công"
+    #         else:
+    #             text = f"@{username} đã giao dịch thành công {res.json()['transaction']} lần"
 
-                if res.json()['reputation'] == 'yes':
-                    text += " - Uy tín 💎"
+    #             if res.json()['reputation'] == 'yes':
+    #                 text += " - Uy tín 💎"
 
-            await context.bot.send_message(chat_id, text=text)
-            return
+    #         await context.bot.send_message(chat_id, text=text)
+    #         return
 
-        reply_markup = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text='|<', callback_data='first'),
-             InlineKeyboardButton(text='<', callback_data='prev'),
-             InlineKeyboardButton(text='>', callback_data='next'),
-             InlineKeyboardButton(text='>|', callback_data='last')]],
-        )
+    #     reply_markup = InlineKeyboardMarkup(
+    #         [[InlineKeyboardButton(text='|<', callback_data='first'),
+    #          InlineKeyboardButton(text='<', callback_data='prev'),
+    #          InlineKeyboardButton(text='>', callback_data='next'),
+    #          InlineKeyboardButton(text='>|', callback_data='last')]],
+    #     )
 
-        await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
+    #     await context.bot.send_message(chat_id, text=content(1), reply_markup=reply_markup, parse_mode=constants.ParseMode.HTML)
 
     if "/kyc" in update.message.text:
 

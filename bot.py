@@ -330,15 +330,14 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
         ]
     
     try:
-        res = requests.get(f"{domain}/api/setup")
-        last_msg_id = res.json()[0]["value"]
+        res = requests.get(f"{domain}/api/setup/thongbao")
+        last_msg_id = res.json()["value"]
         await context.bot.delete_message(message_id=last_msg_id, chat_id='-1001871429218')
         msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
-        requests.put(f"{domain}/api/setup/4", {'value': msg.message_id})
+        requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
     except:
         msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
-        requests.put(f"{domain}/api/setup/4", {'value': msg.message_id})
-
+        requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
 
 job_queue = app.job_queue
 

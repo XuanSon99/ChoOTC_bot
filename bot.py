@@ -312,11 +312,11 @@ app.add_handler(MessageHandler(filters.ALL, messageHandler))
 async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
     list = [
-        "<b>Điều Kiện Để Đăng Quảng Cáo</b>\n👉 Hãy chat ngay với @ChoOTCVN_bot để gửi yêu cầu KYC. Sau khi KYC thành công bạn sẽ được tự do đăng quảng cáo, mua bán, trao đổi với các Thương Nhân khác trong chợ.\n\nLưu ý:\n- Huy hiệu KYC là những Thương Nhân đã KYC.\n- Huy hiệu Uy tín là những Thương Nhân uy tín, buôn bán thâm niên và được ban quản lý bảo trợ.",
+        # "<b>Điều Kiện Để Đăng Quảng Cáo</b>\n👉 Hãy chat ngay với @ChoOTCVN_bot để gửi yêu cầu KYC. Sau khi KYC thành công bạn sẽ được tự do đăng quảng cáo, mua bán, trao đổi với các Thương Nhân khác trong chợ.\n\nLưu ý:\n- Huy hiệu KYC là những Thương Nhân đã KYC.\n- Huy hiệu Uy tín là những Thương Nhân uy tín, buôn bán thâm niên và được ban quản lý bảo trợ.",
 
-        "<b>Quy Định Về Đăng Quảng Cáo</b>\n\n👉 Thương Nhân chỉ được phép đăng quảng cáo theo form:\nVí dụ: Mua/bán 100k USDT giá 23999.\n👉 Không được phép đăng link, nếu đăng link sẽ bị ban ngay lập tức!",
+        "<b>Quy Định Về Đăng Quảng Cáo</b>\n👉 Thương Nhân chỉ được phép đăng quảng cáo theo form:\nVí dụ: Mua/bán 100k USDT giá 23999.\n👉 Không được phép đăng link, nếu đăng link sẽ bị ban ngay lập tức!",
 
-        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n👉 Các thành viên được phép tự do trao đổi, mua bán với nhau mà không cần thông qua Admin hay bên thứ 3.  Chợ OTC Việt Nam 🇻🇳 sẽ không chịu trách nhiệm đối với những giao dịch không có mặt của Admin hoặc không phải là thành viên uy tín được ban quản lý bảo trợ!",
+        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n👉 Các thành viên được phép tự do trao đổi, mua bán với nhau mà không cần thông qua Admin hay bên thứ 3. Chợ OTC Việt Nam 🇻🇳 sẽ không chịu trách nhiệm đối với những giao dịch không có mặt của Admin!",
 
         # "<b>Thành Viên Uy Tín Là Ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng. Huy hiệu uy tín phải được đội ngũ bản quản lý chợ cấp.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Có trên 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Giao dịch thành công tối thiểu 30 lần.\n- Được check thông tin cụ thể và phê duyệt từ 3 Admin.\n\n<i>Chat /uytin với bot @ChoOTCVN_bot để kiểm tra danh sách uy tín!</i>",
 

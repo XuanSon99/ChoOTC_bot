@@ -312,12 +312,12 @@ app.add_handler(MessageHandler(filters.ALL, messageHandler))
 async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
 
     list = [
-        "<b>Thông báo</b>: Hiện tại telegram @QuocPham_OTC không còn làm việc tại HeroTeam. Mọi giao dịch sẽ là giao dịch cá nhân. Admin sẽ không chịu trách nhiệm khi có vấn đề rủi ro xảy ra. Trân trọng 👌",
-        # "<b>Điều Kiện Để Đăng Quảng Cáo</b>\n👉 Hãy chat ngay với @ChoOTCVN_bot để gửi yêu cầu KYC. Sau khi KYC thành công bạn sẽ được tự do đăng quảng cáo, mua bán, trao đổi với các Thương Nhân khác trong chợ.\n\nLưu ý:\n- Huy hiệu KYC là những Thương Nhân đã KYC.\n- Huy hiệu Uy tín là những Thương Nhân uy tín, buôn bán thâm niên và được ban quản lý bảo trợ.",
+        # "<b>Thông báo</b>: Hiện tại telegram @QuocPham_OTC không còn làm việc tại HeroTeam. Mọi giao dịch sẽ là giao dịch cá nhân. Admin sẽ không chịu trách nhiệm khi có vấn đề rủi ro xảy ra. Trân trọng 👌",
+        "<b>Điều Kiện Để Đăng Quảng Cáo</b>\n👉 Hãy chat ngay với @ChoOTCVN_bot để gửi yêu cầu KYC. Sau khi KYC thành công bạn sẽ được tự do đăng quảng cáo, mua bán, trao đổi với các Thương Nhân khác trong chợ.\n\nLưu ý:\n- Huy hiệu KYC là những Thương Nhân đã KYC.\n- Huy hiệu Uy tín là những Thương Nhân uy tín, buôn bán thâm niên và được ban quản lý bảo trợ.",
 
         # "<b>Quy Định Về Đăng Quảng Cáo</b>\n👉 Thương Nhân chỉ được phép đăng quảng cáo theo form:\nVí dụ: Mua/bán 100k USDT giá 23999.\n👉 Không được phép đăng link, nếu đăng link sẽ bị ban ngay lập tức!",
 
-        # "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n👉 Các thành viên được phép tự do trao đổi, mua bán với nhau mà không cần thông qua Admin hay bên thứ 3. Chợ OTC Việt Nam 🇻🇳 sẽ không chịu trách nhiệm đối với những giao dịch không có mặt của Admin!",
+        "<b>Thông Báo Miễn Trừ Trách Nhiệm</b>\n👉 Các thành viên được phép tự do trao đổi, mua bán với nhau mà không cần thông qua Admin hay bên thứ 3. Chợ OTC Việt Nam 🇻🇳 sẽ không chịu trách nhiệm đối với những giao dịch không có mặt của Admin!",
 
         # "<b>Thành Viên Uy Tín Là Ai ?</b>\nLà những thành viên buôn bán thâm niên, chuyên nghiệp, có uy tín cao trong cộng đồng. Huy hiệu uy tín phải được đội ngũ bản quản lý chợ cấp.\n<b>Làm thế nào để trở thành TV uy tín ?</b>\n- Có trên 6 tháng hoạt động buôn bán tại Chợ OTC VN.\n- Giao dịch thành công tối thiểu 30 lần.\n- Được check thông tin cụ thể và phê duyệt từ 3 Admin.\n\n<i>Chat /uytin với bot @ChoOTCVN_bot để kiểm tra danh sách uy tín!</i>",
 
@@ -335,10 +335,10 @@ async def callback_minute(context: ContextTypes.DEFAULT_TYPE):
         last_msg_id = res.json()["value"]
         await context.bot.delete_message(message_id=last_msg_id, chat_id='-1001871429218')
         msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
-        # requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
+        requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
     except:
         msg = await context.bot.send_message(chat_id='-1001871429218', text=random.choice(list), parse_mode=constants.ParseMode.HTML)
-        # requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
+        requests.put(f"{domain}/api/setup/thongbao", {'value': msg.message_id})
 
 job_queue = app.job_queue
 
